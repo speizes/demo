@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        /* Estilos para el header fijo */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            z-index: 1000;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilos para el footer fijo */
+        .footer-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            z-index: 1000;
+            padding: 10px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Ajustar el contenido principal */
+        #main-screen {
+            position: relative;
+            padding-top: 70px; /* Ajusta según la altura del header */
+            padding-bottom: 120px; /* Aumenta el padding-bottom para evitar solapamiento con el footer */
+        }
+
+        /* Permitir desplazamiento vertical en el contenido */
+        .menu-box {
+            overflow-y: auto; /* Permite el desplazamiento vertical si el contenido es largo */
+            max-height: calc(100vh - 140px); /* Ajusta la altura máxima para que no se solape con el header y el footer */
+        }
+    </style>
+</head>
+<body>
+    <!-- Overlay para oscurecer el fondo cuando el menú está activo -->
+    <div id="overlay"></div>
+
+    <!-- Pantalla principal -->
+    <div id="main-screen">
+        <!-- Cabecera con logo y menú hamburguesa -->
+        <div class="header">
+            <a href="presentacion.html"><img src="assets/img/logo-hor.png" alt="Logotipo" class="logo-hr"></a>
+            <div id="menu-toggle" class="menu-hamburger">&#9776;</div>
+        </div>
+
+        <!-- Menú lateral -->
+        <div id="menu" class="menu">
+            <div class="menu-header-nav">
+                <span>MENU</span>
+            </div>
+            <div class="menu-item">
+                <i class="bi bi-gear"></i> Settings
+            </div>
+            <div class="menu-item">
+                <i class="bi bi-pencil"></i> Register
+            </div>
+            <div class="menu-item">
+                <i class="bi bi-person"></i> Profile
+            </div>
+            <div class="menu-item">
+                <i class="bi bi-wallet"></i> Balance
+            </div>
+            <div class="menu-item" id="close-menu">
+                <i class="bi bi-x-circle"></i> Close
+            </div>
+        </div>
+
+        <!-- Caja blanca con contenido -->
+        <div class="menu-box">
+            <div class="menu-header">
+                <h1>51Fifteen</h1>
+                <p>American Food<br>5175 Westheimer Rd, Houston</p>
+                <hr class="dotted-line">
+            </div>
+
+            <!-- Tres renglones con la información de las órdenes -->
+            <div class="order-row">
+				<a href="pedidos.html" style="text-decoration: none; cursor: pointer;">
+                <div class="row mb-3">
+                    <!-- Order #004 en negritas y color negro -->
+                    <div class="col-12">
+                        <strong style="color: black;">Order #004</strong>
+                    </div>
+
+                    <!-- Icono de la orden y segundo icono con texto al lado -->
+                    <div class="col-2">
+                        <img src="assets/img/status-order-icon-check.png" alt="Order Icon" class="order-icon">
+                    </div>
+
+                    <div class="col-2">
+                        <!-- Segundo icono como imagen cuadrada -->
+                        <img src="assets/img/order-icon.png" alt="Order Status" class="order-status-image">
+                    </div>
+
+                    <!-- Texto en color gris -->
+                    <div class="col-8" style="color: gray;">
+                        Menu Order <br>
+                        Status: New Order <br>
+                        Start: 15:30:00 <br>
+                        End: --
+                    </div>
+                </div>
+					</a>
+                <hr class="dotted-line">
+            </div>
+
+            <div class="order-row">
+                <div class="row mb-3">
+                    <!-- Order #003 en negritas y color negro -->
+                    <div class="col-12">
+                        <strong style="color: black;">Order #003</strong>
+                    </div>
+
+                    <!-- Icono de la orden y segundo icono con texto al lado -->
+                    <div class="col-2">
+                        <img src="assets/img/status-order-icon-done.png" alt="Order Icon" class="order-icon">
+                    </div>
+
+                    <div class="col-2">
+                        <!-- Segundo icono como imagen cuadrada -->
+                        <img src="assets/img/order-icon.png" alt="Order Status" class="order-status-image">
+                    </div>
+
+                    <!-- Texto en color gris -->
+                    <div class="col-8" style="color: gray;">
+                        Menu Order <br>
+                        Status: New Order <br>
+                        Start: 15:30:00 <br>
+                        End: --
+                    </div>
+                </div>
+                <hr class="dotted-line">
+            </div>
+
+            <div class="order-row">
+                <div class="row mb-3">
+                    <!-- Order #002 en negritas y color negro -->
+                    <div class="col-12">
+                        <strong style="color: black;">Order #002</strong>
+                    </div>
+
+                    <!-- Icono de la orden y segundo icono con texto al lado -->
+                    <div class="col-2">
+                        <img src="assets/img/status-order-icon-process.png" alt="Order Icon" class="order-icon">
+                    </div>
+
+                    <div class="col-2">
+                        <!-- Segundo icono como imagen cuadrada -->
+                        <img src="assets/img/order-icon.png" alt="Order Status" class="order-status-image">
+                    </div>
+
+                    <!-- Texto en color gris -->
+                    <div class="col-8" style="color: gray;">
+                        Menu Order <br>
+                        Status: New Order <br>
+                        Start: 15:30:00 <br>
+                        End: --
+                    </div>
+                </div>
+                <hr class="dotted-line">
+            </div>
+        </div>
+
+        <!-- Footer con iconos de menú -->
+        <div class="footer-bar">
+            <a href="menu.html" class="footer-btn">
+                <img src="assets/img/icono-menu.png" alt="Menú" class="footer-icon">
+                <p>Menu</p>
+            </a>
+            <div class="footer-btn">
+                <a href="orders.html" class="footer-btn">
+                    <img src="assets/img/icono-pedidos.png" alt="Pedidos" class="footer-icon">
+                    <p>Orders</p>
+                </a>
+            </div>
+            <div class="footer-btn">
+                <a href="ingredientes.html" class="footer-btn">
+                    <img src="assets/img/icono-ingredientes.png" alt="Ingredientes" class="footer-icon">
+                    <p>Ingredients</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts de Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuToggle = document.getElementById('menu-toggle');
+            const menu = document.getElementById('menu');
+            const closeMenu = document.getElementById('close-menu');
+            const hamburgerIcon = document.querySelector('.menu-hamburger');
+            const overlay = document.getElementById('overlay');
+            const mainScreen = document.getElementById('main-screen');
+
+            // Abrir el menú al hacer clic en el ícono de hamburguesa
+            menuToggle.addEventListener('click', function (event) {
+                event.stopPropagation(); // Evita que el clic se propague
+                menu.classList.toggle('visible');
+                hamburgerIcon.classList.toggle('active');
+                mainScreen.classList.toggle('menu-visible'); // Activa el overlay
+            });
+
+            // Cerrar el menú al hacer clic en "Close"
+            closeMenu.addEventListener('click', function () {
+                menu.classList.remove('visible');
+                hamburgerIcon.classList.remove('active');
+                mainScreen.classList.remove('menu-visible'); // Desactiva el overlay
+            });
+
+            // Cerrar el menú al hacer clic fuera de él
+            document.addEventListener('click', function (event) {
+                if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
+                    menu.classList.remove('visible');
+                    hamburgerIcon.classList.remove('active');
+                    mainScreen.classList.remove('menu-visible'); // Desactiva el overlay
+                }
+            });
+        });
+    </script>
+</body>
+</html>

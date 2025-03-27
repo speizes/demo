@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orden</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        /* Estilos para el header fijo */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            z-index: 1000;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilos para el footer fijo */
+        .footer-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            z-index: 1000;
+            padding: 10px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Ajustar el contenido principal */
+        #main-screen {
+            position: relative;
+            padding-top: 70px; /* Ajusta según la altura del header */
+            padding-bottom: 70px; /* Ajusta según la altura del footer */
+        }
+
+        .price {
+            color: #febc22;
+            text-align: right;
+            flex: 1;
+        }
+        .platillo {
+            text-decoration: none;
+            color: gray;
+        }
+        .menu-box {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .item-container {
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
+        .item-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .item-details h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #140a33;
+            flex: 1;
+        }
+        .taxes-fees {
+            margin-top: 20px;
+        }
+        .taxes-fees p {
+            margin: 5px 0;
+            color: gray;
+            display: flex;
+            justify-content: space-between;
+        }
+        .tip-section {
+            margin-top: 20px;
+        }
+        .tip-section h4 {
+            margin-bottom: 10px;
+            color: #140a33;
+        }
+        .tip-options {
+            display: flex;
+            gap: 10px;
+        }
+        .tip-options label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .tip-options input[type="radio"] {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #febc22;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .tip-options input[type="radio"]:checked {
+            background-color: #febc22;
+        }
+        .tip-options input[type="radio"]:checked::after {
+            content: "✔";
+            color: black;
+            font-size: 14px;
+        }
+        .tip-options span {
+            color: #140a33;
+        }
+        .total-section {
+            margin-top: 20px;
+            text-align: right;
+        }
+        .total-section h3 {
+            margin: 0;
+            font-size: 24px;
+            color: #140a33;
+        }
+        .total-section .price {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .order-btn {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #4CAF50;
+            background: none;
+            color: #4CAF50;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        .order-btn:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* Estilos para el botón "Cerrar pedido" */
+        .close-order-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 100px; /* Espacio adicional para evitar solapamiento con el footer */
+        }
+        .close-order-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Para ocultar el botón de pagar */
+        .pay-btn-container {
+            display: none;
+            margin-top: -100px; margin-bottom: 100px;
+        }
+
+        /* Estilo para el botón de cerrar menú */
+        .close-menu-btn {
+            font-size: 24px;
+            cursor: pointer;
+            margin-left: 220px;
+            color: #febc22;;
+        }
+        /* Estilos para el footer fijo */
+        .footer-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            z-index: 1000;
+            padding: 10px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Ajustar el contenido principal */
+        #main-screen {
+            position: relative;
+            padding-top: 70px; /* Ajusta según la altura del header */
+            padding-bottom: 120px; /* Aumenta el padding-bottom para evitar solapamiento con el footer */
+        }
+    </style>
+</head>
+<body>
+    <!-- Cabecera con logo, nombre, dirección y los iconos de comida y bebidas -->
+    <div id="main-screen">
+        <div class="header">
+            <a href="presentacion.html"><img src="assets/img/logo-hor.png" alt="Logotipo" class="logo-hr"></a>
+            <div id="menu-toggle" class="menu-hamburger">&#9776;</div>
+        </div>
+
+        <!-- Menú lateral -->
+        <div id="menu" class="menu">
+            <!-- Botón para cerrar el menú -->
+            <div class="close-menu-btn" id="close-menu-btn">&#10006;</div>
+            <div class="menu-header-nav">
+                <span>MENU</span>
+            </div>
+            <div class="menu-item">
+                <i class="bi bi-upload"></i> Carga
+            </div>
+            <div class="menu-item">
+                <i class="bi bi-person-fill"></i> Perfil
+            </div>
+            <div class="menu-item">
+                <i class="bi bi-gear-fill"></i> Administración
+            </div>
+            <div class="menu-item" id="close-menu">
+                <i class="bi bi-x-circle"></i> Cerrar Sesión
+            </div>
+        </div>
+
+        <div class="menu-header preview-title">
+            <h1>51Fifteen</h1>
+            <p>Comida Americana<br>5175 Westheimer Rd, Houston</p>
+            <hr class="dotted-line">
+        </div>
+
+        <!-- Contenido del carrito de compra -->
+        <h2 style="color: #140a33; margin-top: 20px; margin-left: 20px;"><strong>Cuenta</strong></h2>
+        <div class="menu-box">
+            <!-- Lista de productos -->
+            <div class="item-container">
+                <div class="item-details">
+                    <h3>Hamburguesa 51FIFTEEN AKAUSHI</h3>
+                    <span class="price">$12 USD</span>
+                </div>
+            </div>
+            <div class="item-container">
+                <div class="item-details">
+                    <h3>Ceviche 51FIFTEEN</h3>
+                    <span class="price">$13 USD</span>
+                </div>
+            </div>
+
+            <!-- Impuestos y cargos adicionales -->
+            <div class="taxes-fees">
+                <p>Impuestos: <span class="price" id="taxes">$3 USD</span></p>
+                <p>Cargos adicionales: <span class="price" id="fees">$4 USD</span></p>
+                <p>Costos del servicio: <span class="price" id="service">$2 USD</span></p>
+            </div>
+
+            <!-- Sección de propina -->
+            <div class="tip-section">
+                <h4>¿Gusta agregar propina?</h4>
+                <div class="tip-options">
+                    <label>
+                        <input type="radio" name="tip" value="5">
+                        <span>5%</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="tip" value="10">
+                        <span>10%</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="tip" value="15">
+                        <span>15%</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="tip" value="20">
+                        <span>20%</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Total -->
+            <div class="total-section">
+                <h3>Total <span class="price" id="total">$34 USD</span></h3>
+            </div>
+
+            <!-- Botón de Cerrar Pedido -->
+            <button class="close-order-btn" onclick="showPayButton()">Cerrar pedido</button>
+
+            <!-- Contenedor de botón de Pagar (inicialmente oculto) -->
+            <div class="pay-btn-container" id="payButtonContainer">
+                <a href="presentacion.html"><button class="order-btn">Pagar</button></a>
+            </div>
+        </div>
+        <!-- Footer con iconos de menú -->
+        <div class="footer-bar">
+            <a href="menu.html" class="footer-btn">
+                <img src="assets/img/icono-menu.png" alt="Menú" class="footer-icon">
+                <p>Menú</p>
+            </a>
+            <div class="footer-btn">
+                <a href="orden.html" class="footer-btn">
+                    <img src="assets/img/icono-pedidos.png" alt="Pedidos" class="footer-icon">
+                    <p>Pedido</p>
+                </a>
+            </div>
+            <div class="footer-btn">
+                <a href="pagar.html" class="footer-btn">
+                    <img src="assets/img/icono-ingredientes.png" alt="Ingredientes" class="footer-icon">
+                    <p>Facturar</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Función para calcular el total con propina
+        function updateTotal() {
+            const baseTotal = 34; // Total base sin propina
+            const taxes = 3;
+            const fees = 4;
+            const service = 2;
+
+            let tipPercentage = 0;
+            const selectedTip = document.querySelector('input[name="tip"]:checked');
+            if (selectedTip) {
+                tipPercentage = parseFloat(selectedTip.value);
+            }
+
+            const tipAmount = (baseTotal * tipPercentage) / 100;
+            const total = baseTotal + taxes + fees + service + tipAmount;
+
+            document.getElementById('total').textContent = `$${total.toFixed(2)} USD`;
+        }
+
+        // Agregar evento de cambio en las opciones de propina
+        document.querySelectorAll('input[name="tip"]').forEach(radio => {
+            radio.addEventListener('change', updateTotal);
+        });
+
+        function showPayButton() {
+            console.log("Botón de pagar mostrado"); // Verifica si esta línea aparece en la consola
+            document.getElementById('payButtonContainer').style.display = 'block'; // Muestra el botón de pagar
+        }
+
+        // Cerrar el menú al hacer clic en la X
+        document.getElementById('close-menu-btn').addEventListener('click', function () {
+            document.getElementById('menu').classList.remove('visible');
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuToggle = document.getElementById('menu-toggle');
+            const menu = document.getElementById('menu');
+            const closeMenu = document.getElementById('close-menu');
+            const overlay = document.getElementById('overlay');
+
+            // Abrir el menú al hacer clic en el ícono de hamburguesa
+            menuToggle.addEventListener('click', function (event) {
+                event.stopPropagation();
+                menu.classList.toggle('visible');
+                overlay.classList.toggle('visible');
+            });
+
+            // Cerrar el menú al hacer clic en "Close"
+            closeMenu.addEventListener('click', function () {
+                menu.classList.remove('visible');
+                overlay.classList.remove('visible');
+            });
+
+            // Cerrar el menú al hacer clic fuera de él
+            overlay.addEventListener('click', function () {
+                menu.classList.remove('visible');
+                overlay.classList.remove('visible');
+            });
+        });
+    </script>
+</body>
+</html>

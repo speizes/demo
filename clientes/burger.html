@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hamburguesa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+       .menu-box {
+            padding: 20px;
+            margin-top: 10px; /* espacio para el header */
+            margin-bottom: 200px; /* espacio para el footer */
+            min-height: calc(100vh - 180px); /* asegura altura mínima */
+            overflow-y: auto; /* permite desplazarse si es muy largo */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* distribuye el contenido para que el botón esté abajo */
+        }
+
+        .menu-header {
+            margin-top: 100px; /* Ajusta según la altura del header */
+            text-align: left;
+            padding: 10px 20px;
+        }
+
+        .platillo-title {
+            display: flex;
+            justify-content: space-between;
+            font-size: 20px;
+            color: #140a33;
+            font-weight: bold;
+        }
+
+        .price {
+            color: #febc22;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Contenedor Flip Card */
+        .flip-card {
+            width: 100%;
+            max-width: 400px;
+            height: 400px;
+            perspective: 1000px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        /* Cara frontal */
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+        }
+
+        .flip-card-front {
+            background-color: transparent;
+        }
+
+        .flip-card-back {
+            background-color: white;
+            color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            padding: 20px;
+            text-align: center;
+            transform: rotateY(180deg); /* La cara posterior debe estar girada inicialmente */
+        }
+
+        /* Imagen de la tarjeta */
+        .platillo-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Asegura que la imagen cubra completamente el área */
+            border-radius: 15px;
+        }
+
+        /* Botón de agregar a la orden */
+        .order-btn {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #4CAF50;
+            background: none;
+            color: #4CAF50;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .order-btn:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 10px;
+        }
+
+        .footer-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 5px 0;
+            border-top: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cabecera con logo, nombre, dirección y los iconos de comida y bebidas -->
+    <div id="main-screen">
+        <div class="header">
+            <a href="presentacion.html"><img src="assets/img/logo-hor.png" alt="Logotipo" class="logo-hr"></a>
+            <div id="menu-toggle" class="menu-hamburger">&#9776;</div>
+        </div>
+
+        <!-- Menú lateral -->
+        <div id="menu" class="menu" style="display: none;">
+            <div class="menu-header-nav">
+                <span>MENU</span>
+            </div>
+            <div class="menu-item">
+                <i class="bi bi-upload"></i> Carga
+            </div>
+            <div class="menu-item">
+                <i class="bi bi-person-fill"></i> Perfil
+            </div>
+            <div class="menu-item">
+                <i class="bi bi-gear-fill"></i> Administración
+            </div>
+            <div class="menu-item" id="close-menu">
+                <i class="bi bi-x-circle"></i> Cerrar Sesión
+            </div>
+        </div>
+
+        <div class="menu-header preview-title">
+            <h1>51Fifteen</h1>
+            <p>Comida Americana<br>5175 Westheimer Rd, Houston</p>
+            <hr class="dotted-line">
+        </div>
+
+        <!-- Caja blanca con contenido -->
+        <div class="menu-box">
+            <!-- Título y precio -->
+            <div class="platillo-title">
+                <span>Hamburguesa 51Fifteen</span>
+                <span class="price">$19.99</span>
+            </div>
+
+            <!-- Flip Card con la imagen y el texto -->
+            <div class="flip-card" id="flipCard">
+                <div class="flip-card-inner">
+                    <!-- Cara frontal con la imagen -->
+                    <div class="flip-card-front">
+                        <img src="assets/img/burger1.png" alt="Platillo" class="platillo-image">
+                    </div>
+                    <!-- Cara posterior con el texto -->
+                    <div class="flip-card-back">
+                        Carne de res criada en Texas, pan brioche casero, lechuga, tomate, cebolla, pepinillos, tocino ahumado con madera de manzano, queso cheddar, mayonesa, alioli de chipotle.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botón de agregar a la orden -->
+            <a href="select-burger.html"><button class="order-btn">Seleccionar</button></a>
+            <br><br>
+        </div>
+
+        <!-- Footer con iconos de menú -->
+        <div class="footer-bar">
+            <a href="menu.html" class="footer-btn">
+                <img src="assets/img/icono-menu.png" alt="Menú" class="footer-icon">
+                <p>Menú</p>
+            </a>
+            <div class="footer-btn">
+                <a href="orden.html" class="footer-btn">
+                    <img src="assets/img/icono-pedidos.png" alt="Pedidos" class="footer-icon">
+                    <p>Pedido</p>
+                </a>
+            </div>
+            <div class="footer-btn">
+                <a href="pagar.html" class="footer-btn">
+                    <img src="assets/img/icono-ingredientes.png" alt="Ingredientes" class="footer-icon">
+                    <p>Facturar</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Toggle del menú lateral
+            document.getElementById('menu-toggle').addEventListener('click', function() {
+                const menu = document.getElementById('menu');
+                menu.style.display = (menu.style.display === 'block' ? 'none' : 'block');
+            });
+
+            // Acción del flip card
+            const flipCard = document.getElementById('flipCard');
+            flipCard.addEventListener('click', function () {
+                flipCard.classList.toggle('flipped');
+            });
+        });
+    </script>
+ <script>document.addEventListener('DOMContentLoaded', function () {
+    const menuToggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+    const closeMenu = document.getElementById('close-menu');
+    const hamburgerIcon = document.querySelector('.menu-hamburger');
+    const overlay = document.getElementById('overlay');
+    const mainScreen = document.getElementById('main-screen');
+
+    // Abrir el menú al hacer clic en el ícono de hamburguesa
+    menuToggle.addEventListener('click', function (event) {
+        event.stopPropagation(); // Evita que el clic se propague
+        menu.classList.toggle('visible');
+        hamburgerIcon.classList.toggle('active');
+        mainScreen.classList.toggle('menu-visible'); // Activa el overlay
+    });
+
+    // Cerrar el menú al hacer clic en "Close"
+    closeMenu.addEventListener('click', function () {
+        menu.classList.remove('visible');
+        hamburgerIcon.classList.remove('active');
+        mainScreen.classList.remove('menu-visible'); // Desactiva el overlay
+    });
+
+    // Cerrar el menú al hacer clic fuera de él
+    document.addEventListener('click', function (event) {
+        if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
+            menu.classList.remove('visible');
+            hamburgerIcon.classList.remove('active');
+            mainScreen.classList.remove('menu-visible'); // Desactiva el overlay
+        }
+    });
+});</script>
+</body>
+</html>

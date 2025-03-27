@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentación</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        /* Estilo para el recuadro de notificación */
+        .notification-box {
+            position: absolute;
+            top: 70px;  /* Ajusta el espacio superior */
+            right: 0px; /* Ajusta el espacio derecho */
+            background-color: red;
+            color: white;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        /* Cuando el recuadro es clickeable */
+        .notification-box:hover {
+            background-color: darkred;
+        }
+
+        /* Para asegurarse de que el contenedor del menú no cubra la notificación */
+        #main-screen {
+            position: relative;
+        }
+	    .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 10px;
+}
+
+.footer-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px 0;
+    border-top: 1px solid #ccc;
+}
+
+.menu-box {
+    margin-top: 100px; /* espacio para el header */
+    margin-bottom: 80px; /* espacio para el footer */
+    padding: 20px;
+    overflow-y: auto;
+    max-height: calc(100vh - 180px); /* alto visible sin tapar por header/footer */
+}
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 160px); /* Altura de pantalla menos header y footer */
+    padding-top: 100px; /* altura del header fijo */
+    padding-bottom: 80px; /* altura del footer fijo */
+    text-align: center;
+}
+
+.qr-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.column-content {
+    max-width: 320px;
+    margin: auto;
+}
+
+.qr-code {
+    width: 200px;
+    height: auto;
+    margin: 15px auto;
+}
+
+.icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.icon {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+    </style>
+</head>
+<body>
+    <div id="overlay"></div> <!-- Overlay para oscurecer el contenido -->
+    <div id="main-screen">
+        <div class="header">
+            <img src="assets/img/logo-hor.png" alt="Logotipo" class="logo-hr">
+            <div id="menu-toggle" class="menu-hamburger">&#9776;</div>
+            
+            <!-- Notificación -->
+            <div class="notification-box" onclick="window.location.href='pedidos.html';">
+                1
+            </div>
+        </div>
+
+        <!-- Menú lateral -->
+        <div id="menu" class="menu">
+            <div class="menu-header-nav">
+                <span>MENU</span>
+            </div>
+            <div class="menu-item">
+                <i class="bi bi-gear"></i> Settings
+            </div>
+            <div class="menu-item">
+                <i class="bi bi-pencil"></i> Register
+            </div>
+            <div class="menu-item">
+                <i class="bi bi-person"></i> Profile
+            </div>
+            <div class="menu-item">
+                <i class="bi bi-wallet"></i> Balance
+            </div>
+            <div class="menu-item" id="close-menu">
+                <i class="bi bi-x-circle"></i> Close
+            </div>
+        </div>
+
+        <!-- Resto del contenido -->
+        <div class="content">
+            <div class="qr-section">
+                <div class="column column-empty"></div>
+                <div class="column column-content">
+                    <img src="assets/img/logo-51.png" alt="Logotipo" class="logo-hr img-fluid">
+                    <p class="name">51Fifteen</p>
+                    <img src="assets/img/qr.png" alt="Código QR" class="qr-code">
+                    <p class="address">American Food<br>5175 Westheimer Rd, Houston</p>
+                    <div class="icons">
+                        <i class="bi bi-share icon"></i>
+                        <i class="bi bi-printer icon"></i>
+                    </div>
+                </div>
+                <div class="column"></div>
+            </div>
+        </div>
+
+        <!-- Footer con iconos de menú -->
+        <div class="footer-bar">
+            <a href="menu.html" class="footer-btn">
+                <img src="assets/img/icono-menu.png" alt="Menú" class="footer-icon">
+                <p>Menu</p>
+            </a>
+            <div class="footer-btn">
+                <a href="orders.html" class="footer-btn">
+                    <img src="assets/img/icono-pedidos.png" alt="Pedidos" class="footer-icon">
+                    <p>Orders</p>
+                </a>
+            </div>
+            <div class="footer-btn">
+                <a href="ingredientes.html" class="footer-btn">
+                    <img src="assets/img/icono-ingredientes.png" alt="Ingredientes" class="footer-icon">
+                    <p>Ingredients</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+	 <script>document.addEventListener('DOMContentLoaded', function () {
+    const menuToggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+    const closeMenu = document.getElementById('close-menu');
+    const hamburgerIcon = document.querySelector('.menu-hamburger');
+    const overlay = document.getElementById('overlay');
+    const mainScreen = document.getElementById('main-screen');
+
+    // Abrir el menú al hacer clic en el ícono de hamburguesa
+    menuToggle.addEventListener('click', function (event) {
+        event.stopPropagation(); // Evita que el clic se propague
+        menu.classList.toggle('visible');
+        hamburgerIcon.classList.toggle('active');
+        mainScreen.classList.toggle('menu-visible'); // Activa el overlay
+    });
+
+    // Cerrar el menú al hacer clic en "Close"
+    closeMenu.addEventListener('click', function () {
+        menu.classList.remove('visible');
+        hamburgerIcon.classList.remove('active');
+        mainScreen.classList.remove('menu-visible'); // Desactiva el overlay
+    });
+
+    // Cerrar el menú al hacer clic fuera de él
+    document.addEventListener('click', function (event) {
+        if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
+            menu.classList.remove('visible');
+            hamburgerIcon.classList.remove('active');
+            mainScreen.classList.remove('menu-visible'); // Desactiva el overlay
+        }
+    });
+});</script>
+</body>
+</html>

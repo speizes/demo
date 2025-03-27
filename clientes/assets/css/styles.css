@@ -1,0 +1,432 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+#main-screen {
+    background: url('../img/bg.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #fff;
+    position: relative; /* Necesario para el overlay */
+}
+/* Estilo para la línea discontinua */
+.dotted-line {
+    border-top: 1px dashed #ddd;
+    margin: 10px 0;
+}
+
+/* Estilo para los iconos de la orden */
+.order-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.order-status-image {
+    width: 50px; /* Ajusta el tamaño de la imagen */
+    height: 60px; /* Mantiene la imagen cuadrada */
+    object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
+    border-radius: 4px; /* Redondea las esquinas, si lo deseas */
+}
+.bi-check-circle {
+    font-size: 20px; /* Ajusta el tamaño del nuevo icono */
+    color: #5a393e; /* Puedes cambiar el color si lo deseas */
+    margin-left: 10px; /* Espacio entre el primer icono y el nuevo icono */
+}
+
+
+/* Overlay para oscurecer el contenido */
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Opacidad del 40% */
+    display: none; /* Oculto por defecto */
+    z-index: 1; /* Asegura que esté sobre el contenido pero debajo del menú */
+}
+
+/* Mostrar el overlay cuando el menú está visible */
+#main-screen.menu-visible #overlay {
+    display: block;
+}	
+.food-icon, .drink-icon {
+    width: 40px; /* Ajusta el tamaño del icono */
+    height: 40px;
+    object-fit: cover;
+}
+
+
+.menu-header-nav {
+    padding: 5px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #febc22; /* Color amarillo */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Línea divisoria */
+    margin-bottom: 3px;
+}
+.preview-title{
+	padding-left: 10px;
+}
+
+/* Menú de navegación */
+#menu {
+    position: fixed;
+    top: 0;
+    right: -250px; /* Oculta el menú fuera de la pantalla (izquierda) */
+    width: 250px;
+    height: 100%;
+    background-color: #140a33; /* Color de fondo del menú */
+    color: white;
+    padding-top: 60px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Sombra a la derecha */
+    transition: right 0.3s ease; /* Animación suave */
+    z-index: 99999999999999; /* Asegura que el menú esté sobre el overlay */
+}
+
+/* Mostrar el menú cuando está visible */
+#menu.visible {
+    right: 0;
+}
+
+/* Estilos para los elementos del menú */
+.menu-item {
+    display: flex;
+    align-items: center; /* Alinea el ícono y el texto verticalmente */
+    padding: 10px 20px; /* Espaciado interno */
+    cursor: pointer;
+    text-align: left; /* Alinea el texto a la izquierda */
+}
+
+.menu-item i {
+    margin-right: 15px; /* Espacio entre el ícono y el texto */
+    font-size: 18px; /* Tamaño del ícono */
+}
+
+.menu-item span {
+    font-size: 16px;
+    color: #140a33;
+}
+
+/* Estilos para el ícono de editar */
+.edit-icon {
+    font-size: 18px;
+    color: #140a33;
+    cursor: pointer;
+}
+
+.edit-icon:hover {
+    color: #febc22; /* Cambia el color al pasar el mouse */
+}
+
+/* Ícono de hamburguesa */
+.menu-hamburger {
+    font-size: 30px;
+    cursor: pointer;
+    color: #140a33;
+    transition: color 0.3s ease;
+    margin-left: 20px; /* Espacio entre el borde izquierdo y el ícono */
+}
+
+.menu-hamburger.active {
+    color: #febc22; /* Cambia el color cuando está activo */
+}
+
+/* Cabecera */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.logo-hr {
+    max-width: 30%;
+    height: auto;
+}
+
+/* Footer */
+.footer-bar {
+    background-color: #efefef;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    z-index: 2;
+}
+
+.footer-btn {
+    text-align: center;
+    cursor: pointer;
+}
+
+.footer-icon {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 5px;
+}
+
+.footer-btn p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Contenedor QR */
+.qr-section {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.qr-code {
+    width: 250px;
+    height: 250px;
+    margin-top: 15px;
+    border: 10px solid #140a33;
+    border-radius: 10px;
+}
+
+.name {
+    font-size: 24px;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #140a33;
+}
+
+.address {
+    font-size: 16px;
+    margin-top: 10px;
+    color: #140a33;
+    text-align: center;
+}
+
+.icons {
+    display: flex;
+    flex-direction:row;
+    align-items: flex-start;
+	
+}
+
+.icon {
+    font-size: 20px;
+    cursor: pointer;
+    color: #140a33;
+    margin-bottom: 10px;
+	margin: 10px;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .qr-code {
+        width: 200px;
+        height: 200px;
+    }
+
+    .name {
+        font-size: 20px;
+    }
+
+    .address {
+        font-size: 14px;
+    }
+
+    .header {
+        padding: 10px;
+    }
+
+    .logo-hr {
+        max-width: 40%;
+    }
+
+    .footer-bar {
+        padding: 5px 0;
+    }
+
+    .footer-btn p {
+        font-size: 12px;
+    }
+}
+
+/* Estilos para el botón activo en el footer */
+.footer-btn.active {
+    background-color: #febc22; /* Color amarillo */
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.footer-btn.active p {
+    color: #140a33;
+    font-weight: bold;
+}
+
+/* Estilos para la caja blanca */
+.menu-box {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px; /* Ajusta el padding para más espacio */
+    width: 95%; /* Ocupa el 95% del ancho de la pantalla */
+    max-width: 1200px; /* Ajusta el valor máximo si lo deseas */
+    margin: 0 auto; /* Centrado automático */
+}
+
+/* Estilos para el encabezado del menú */
+.menu-header {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.menu-header h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #140a33;
+    margin-bottom: 10px;
+}
+
+.menu-header p {
+    font-size: 12px;
+    color: #666;
+}
+
+/* Línea punteada azul */
+.dotted-line {
+    border-top: 1px dashed #140a33;
+    margin: 10px 0;
+}
+
+/* Título "Menu" con íconos */
+.menu-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.menu-title h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #140a33;
+    margin: 0;
+}
+
+.menu-icons {
+    display: flex;
+    gap: 10px;
+}
+
+.add-icon, .preview-icon {
+    font-size: 24px;
+    color: #140a33;
+    cursor: pointer;
+}
+
+.add-icon:hover, .preview-icon:hover {
+    color: #febc22;
+}
+
+/* Estilos para el Accordion */
+.accordion-item {
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 100%; /* Asegura que cada ítem ocupe todo el ancho */
+}
+
+.accordion-button {
+    font-size: 18px;
+    font-weight: 200;
+    color: #140a33;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    width: 100%; /* Esto hace que el botón ocupe todo el ancho */
+    padding: 12px 20px; /* Ajusta el relleno para mejor aspecto */
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #f8f9fa;
+    color: #140a33;
+}
+
+.accordion-body {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Estilos para el contenedor del ícono de editar */
+.edit-icon-container {
+    padding-right: 10px; /* Espacio entre el ícono y el borde derecho */
+}
+
+/* Estilos para el ícono de editar */
+.edit-icon {
+    font-size: 18px;
+    color: #140a33;
+    cursor: pointer;
+}
+
+.edit-icon:hover {
+    color: #febc22; /* Cambia el color al pasar el mouse */
+}
+.content-container {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-top: 20px;
+}
+
+/* Estilo para los botones de Food y Drinks */
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: -4px; /* Reduce el espacio superior para mover los botones hacia arriba */
+    margin-bottom: 10px; /* Reduce el espacio inferior si es necesario */
+}
+
+.button {
+    text-align: center;
+    background-color: #e5e5e5;
+    padding: 10px;
+    color: white;
+    width: 80px; /* Ajusta el tamaño a un ancho pequeño */
+    height: 80px; /* Hace que el botón sea cuadrado */
+    cursor: pointer;
+    display: flex;
+    flex-direction: column; /* Organiza el contenido de manera vertical */
+    justify-content: center;
+    align-items: center; /* Centra el contenido dentro del botón */
+    border-radius: 10px;
+}
+
+.button p {
+    margin-top: 5px; /* Ajusta el espacio entre el icono y el texto */
+    font-size: 12px; /* Tamaño de texto más pequeño */
+	color: #140a33;
+}
+
+.button:hover {
+    background-color: #febc22;
+}
+
+.button i {
+    font-size: 24px; /* Ajusta el tamaño del icono */
+}

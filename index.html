@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial</title>
+<style>
+	body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+#intro {
+    background-color: #140a33;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.logo {
+    max-width: 30%;
+}
+	.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 10px;
+}
+
+.footer-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px 0;
+    border-top: 1px solid #ccc;
+}
+
+.menu-box {
+    margin-top: 100px; /* espacio para el header */
+    margin-bottom: 80px; /* espacio para el footer */
+    padding: 20px;
+    overflow-y: auto;
+    max-height: calc(100vh - 180px); /* alto visible sin tapar por header/footer */
+}
+
+</style>
+	
+	</head>
+<body>
+
+    <!-- Pantalla inicial con fondo color #140a33 -->
+    <div id="intro">
+        <img src="assets/img/logo.png" alt="Logotipo" class="logo">
+    </div>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

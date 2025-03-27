@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        /* Estilos para la caja central con la información del pedido */
+        .order-box {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column; /* Cambio para que se alineen verticalmente */
+            justify-content: flex-start;
+            overflow-y: auto; /* Permite el desplazamiento vertical si el contenido es largo */
+            max-height: calc(100vh - 10px); /* Ajusta la altura máxima para que no se solape con el header y el footer */
+        }
+
+        /* Estilos para la parte superior de la caja de la orden */
+        .order-box-header {
+            display: flex;
+            justify-content: space-between; /* Alinea las secciones a izquierda y derecha */
+            margin-bottom: 10px; /* Espacio debajo del header */
+        }
+
+        .order-info-left, .order-info-right {
+            color: #5a393e;
+        }
+
+        .order-info-left h4, .order-info-right h4 {
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .order-info-left p, .order-info-right p {
+            font-size: 12px;
+        }
+
+        .order-info-right {
+            text-align: right;
+            color: red;
+        }
+
+        /* Estilo para el indicador "Unpaid" */
+        .unpaid-indicator {
+            color: #fff;
+            background: red;
+            border-radius: 5px;
+            text-align: center;
+            width: 50px;
+            font-weight: bold;
+            font-size: 12px;
+            margin-top: 5px; /* Espacio entre el nombre del cliente y el indicador */
+        }
+
+        /* Estilos para la tabla de productos */
+        .order-table {
+            margin-top: 20px; /* Ajuste para separar la tabla del contenido anterior */
+            width: 100%;
+            border-collapse: collapse;
+            color: black;
+        }
+
+        .order-table th, .order-table td {
+            padding: 10px;
+            border: none; /*1px solid #ddd;*/
+            text-align: left;
+        }
+
+        .order-table th {
+            background-color: #f8f9fa;
+        }
+
+        /* Imagen de producto */
+        .order-table .product-image {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* Estado del producto */
+        .order-table .product-termino {
+            background-color: #4CAF50;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-top: 5px;
+            font-size: 8px;
+        }
+
+        /* Listas de ingredientes */
+        .order-table .product-list {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        .order-table .product-list li {
+            margin-bottom: 5px;
+        }
+
+        /* Productos tachados */
+        .order-table .red-cross {
+            color: red;
+        }
+
+        /* Botón de Aceptar Pedido */
+        .accept-btn {
+            border: 2px solid #4CAF50;
+            background: none;
+            color: #4CAF50;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            display: inline-block;
+            text-align: center; /* Asegura que el texto esté centrado */
+            width: 100%; /* Asegura que el botón tenga el mismo tamaño que la caja */
+        }
+
+        .accept-btn:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* Estilos para el header fijo */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            z-index: 1000;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilos para el footer fijo */
+        .footer-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            z-index: 1000;
+            padding: 10px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Ajustar el contenido principal */
+        #main-screen {
+            position: relative;
+            padding-top: 70px; /* Ajusta según la altura del header */
+            padding-bottom: 120px; /* Aumenta el padding-bottom para evitar solapamiento con el footer */
+        }
+
+        /* Línea discontinua entre productos */
+        .order-table tr {
+            border-top: 1px dashed #ddd;
+        }
+    </style>
+</head>
+<body>
+    <!-- Cabecera con logo, nombre, dirección y los iconos de comida y bebidas -->
+    <div id="main-screen">
+        <div class="header">
+            <a href="presentacion.html"><img src="assets/img/logo-hor.png" alt="Logotipo" class="logo-hr"></a>
+            <div id="menu-toggle" class="menu-hamburger">&#9776;</div>
+        </div>
+        
+        <!-- Menú lateral -->
+        <div id="menu" class="menu">
+            <div class="menu-header-nav">
+                <span>MENU</span>
+            </div>
+            <div class="menu-item">
+                <i class="bi bi-gear"></i> Settings
+            </div>
+            <div class="menu-item">
+                <i class="bi bi-pencil"></i> Register
+            </div>
+            <div class="menu-item">
+                <i class="bi bi-person"></i> Profile
+            </div>
+            <div class="menu-item">
+                <i class="bi bi-wallet"></i> Balance
+            </div>
+            <div class="menu-item" id="close-menu">
+                <i class="bi bi-x-circle"></i> Close
+            </div>
+        </div>
+
+        <div class="menu-header preview-title">
+            <h1>51Fifteen</h1>
+            <p>American Food<br>5175 Westheimer Rd, Houston</p>
+            <hr class="dotted-line">
+        </div>
+
+        <!-- Información del pedido y cliente -->
+        <div class="order-box">
+            <!-- Información del pedido (Izquierda) -->
+            <div class="order-box-header">
+                <div class="order-info-left">
+                    <h4>Order: #0167</h4>
+                    <p>Eat on Site<br><b>Start Time:</b>15:21:52<br>Table: 23</p>
+                </div>
+                <!-- Información del cliente (Derecha) -->
+                <div class="order-info-right">
+                    <h4>Customer: Eduardo Ruíz</h4>
+                    <p class="unpaid-indicator">Unpaid</p> <!-- Indicador "Unpaid" -->
+                </div>
+            </div>
+            
+            <!-- Tabla de productos -->
+            <table class="order-table">
+                <thead>
+                    <tr>
+                        <th>Qty.</th>
+                        <th>Product</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="ms-3">
+                                    <strong>51FIFTEEN AKAUSHI BURGER</strong>
+                                    <div class="product-termino">Well Done</div>
+                                    <ul class="product-list">
+                                        <li>Ketchup</li>
+                                        <li>Mayonnaise</li>
+                                        <li>Mustard</li>
+                                        <li>Garlic Mashed Potatoes</li>
+                                    </ul>
+                                    <ul class="product-list red-cross">
+                                        <li>✖ Onion</li>
+                                        <li>✖ Pickles</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>1</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="ms-3">
+                                    <strong>51FIFTEEN CEVICHE 25</strong>
+                                   
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+					 <tr>
+                        <td>1</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="ms-3">
+                                    <strong>Zero Coca</strong>
+                                   
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Botón Aceptar Pedido -->
+            <a href="orders.html"><button class="accept-btn">Accept Order</button></a>
+        </div>
+
+        <!-- Footer con botones -->
+        <div class="footer-bar">
+            <a href="menu.html" class="footer-btn">
+                <img src="assets/img/icono-menu.png" alt="Menú" class="footer-icon">
+                <p>Menu</p>
+            </a>
+            <div class="footer-btn">
+                <a href="orders.html" class="footer-btn">
+                    <img src="assets/img/icono-pedidos.png" alt="Pedidos" class="footer-icon">
+                    <p>Orders</p>
+                </a>
+            </div>
+            <div class="footer-btn">
+                <a href="ingredientes.html" class="footer-btn">
+                    <img src="assets/img/icono-ingredientes.png" alt="Ingredientes" class="footer-icon">
+                    <p>Ingredients</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

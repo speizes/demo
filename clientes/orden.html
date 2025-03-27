@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orden</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        /* Estilos para el header fijo */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            z-index: 1000;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilos para el footer fijo */
+        .footer-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            z-index: 1000;
+            padding: 10px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Ajustar el contenido principal */
+        #main-screen {
+            position: relative;
+            padding-top: 70px; /* Ajusta según la altura del header */
+            padding-bottom: 120px; /* Aumenta el padding-bottom para evitar solapamiento con el footer */
+        }
+
+        .price {
+            color: #febc22;
+        }
+        .platillo {
+            text-decoration: none;
+            color: gray;
+        }
+        .menu-box {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            padding-bottom: 90px;
+            max-width: 1000px;
+            margin: 0 auto;
+            height: 1000px;
+        }
+        .counter {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+        }
+        .counter button {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .counter span {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 5px 0;
+            color: black;
+        }
+        .item-container {
+            position: relative;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            border-bottom: 2px dashed #ddd; /* Línea discontinua */
+        }
+        .item-details {
+            display: flex;
+            align-items: flex-start; /* Alinear al inicio */
+        }
+        .item-info {
+            margin-left: 20px;
+            flex-grow: 1; /* Ocupar el espacio restante */
+        }
+        .item-info h3 {
+            margin: 0;
+            font-size: 20px;
+            color: #140a33;
+        }
+        .item-info p {
+            margin: 5px 0;
+            color: gray;
+        }
+        .item-extras {
+            margin-top: 10px;
+            padding-left: 20px;
+            flex-basis: 50%; /* Ocupar la mitad del espacio */
+            font-size: 10px;
+        }
+        .item-extras ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .item-extras ul li {
+            margin: 5px 0;
+            color: gray;
+        }
+        /* Estilos para el botón de eliminar */
+        .delete-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #febc22;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .delete-btn i {
+            color: black;
+            font-size: 16px;
+        }
+        /* Botón de agregar a la orden */
+        .order-btn {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #4CAF50;
+            background: none;
+            color: #4CAF50;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            margin-bottom: 20px; /* Espacio adicional para evitar solapamiento con el footer */
+        }
+        .order-btn:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* Estilos para el menú lateral */
+        #menu {
+            position: fixed;
+            top: 0;
+            right: -250px; /* Oculta el menú fuera de la pantalla */
+            width: 250px;
+            height: 100%;
+            background-color: #001734;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            transition: right 0.3s ease;
+            z-index: 1001;
+        }
+
+        #menu.visible {
+            right: 0; /* Muestra el menú */
+        }
+
+        .menu-header-nav {
+            padding: 20px;
+            background-color: none;
+        }
+
+        .menu-item {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .menu-item:hover {
+            background-color: #001734;
+        }
+
+        #close-menu {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+        }
+
+        /* Overlay para oscurecer el fondo cuando el menú está activo */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+        }
+
+        #overlay.visible {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Overlay para oscurecer el fondo cuando el menú está activo -->
+    <div id="overlay"></div>
+
+    <!-- Cabecera con logo, nombre, dirección y los iconos de comida y bebidas -->
+    <div id="main-screen">
+        <div class="header">
+            <a href="presentacion.html"><img src="assets/img/logo-hor.png" alt="Logotipo" class="logo-hr"></a>
+            <div id="menu-toggle" class="menu-hamburger">&#9776;</div>
+        </div>
+
+        <!-- Menú lateral -->
+         <div id="menu" class="menu">
+            <div class="menu-header-nav">
+                <span>MENU</span>
+            </div>
+            <div class="menu-item">
+                <i class="bi bi-gear"></i> Settings
+            </div>
+            <div class="menu-item">
+                <i class="bi bi-pencil"></i> Register
+            </div>
+            <div class="menu-item">
+                <i class="bi bi-person"></i> Profile
+            </div>
+            <div class="menu-item">
+                <i class="bi bi-wallet"></i> Balance
+            </div>
+            <div class="menu-item" id="close-menu">
+                <i class="bi bi-x-circle"></i> Close
+            </div>
+        </div>
+
+        <div class="menu-header preview-title">
+            <h1>51Fifteen</h1>
+            <p>Comida Americana<br>5175 Westheimer Rd, Houston</p>
+            <hr class="dotted-line">
+        </div>
+
+        <!-- Contenido del carrito de compra -->
+        <h2 style="color: #140a33; margin-top: 20px; margin-left: 20px;"><strong>Carrito de Compra</strong></h2>
+        <div class="menu-box">
+
+            <!-- Primer producto -->
+            <div class="item-container">
+                <!-- Botón de eliminar -->
+                <button class="delete-btn" onclick="removeItem(this)">
+                    <i class="bi bi-x"></i> <!-- Ícono de tacha -->
+                </button>
+                <div class="item-details">
+                    <!-- Contador -->
+                    <div class="counter">
+                        <button onclick="increment(this)">+</button>
+                        <span class="count">1</span>
+                        <button onclick="decrement(this)">-</button>
+                    </div>
+                    <!-- Imagen de la hamburguesa -->
+                    <img src="assets/img/ceviche.png" alt="Burger" width="100" height="100">
+                    <!-- Información de la hamburguesa -->
+                    <div class="item-info">
+                        <h3><b>Ceviche 51Fifteen</b> </h3>
+                        <p class="price">$19.99</p>
+                        <!-- Aderezos y complementos -->
+                        <div class="item-extras">
+                            <ul>
+                                <!-- Sin aderezos -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Segundo producto -->
+            <div class="item-container">
+                <!-- Botón de eliminar -->
+                <button class="delete-btn" onclick="removeItem(this)">
+                    <i class="bi bi-x"></i> <!-- Ícono de tacha -->
+                </button>
+                <div class="item-details">
+                    <!-- Contador -->
+                    <div class="counter">
+                        <button onclick="increment(this)">+</button>
+                        <span class="count">1</span>
+                        <button onclick="decrement(this)">-</button>
+                    </div>
+                    <!-- Imagen de la hamburguesa -->
+                    <img src="assets/img/burger2.png" alt="Burger" width="100" height="100">
+                    <!-- Información de la hamburguesa -->
+                    <div class="item-info">
+                        <h3><b>Hamburguesa 51Fifteen</b></h3>
+                        <p class="price">$15.99</p>
+                        <!-- Aderezos y complementos -->
+                        <div class="item-extras">
+                            <ul>
+                                <li style="background: #12ab51; color:#fff; border-radius: 14px; text-align: center; width: 90px;">Bien Cocido</li>
+                                <li> Mostaza, Ranch</li>
+                                <li> Papas fritas, Ensalada</li>
+                                <li> ❌ Cebolla</li>
+                                <li> ❌ Pepinillos</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tercer producto: Coca Cola Zero -->
+            <div class="item-container">
+                <!-- Botón de eliminar -->
+                <button class="delete-btn" onclick="removeItem(this)">
+                    <i class="bi bi-x"></i> <!-- Ícono de tacha -->
+                </button>
+                <div class="item-details">
+                    <!-- Contador -->
+                    <div class="counter">
+                        <button onclick="increment(this)">+</button>
+                        <span class="count">1</span>
+                        <button onclick="decrement(this)">-</button>
+                    </div>
+                    <!-- Imagen de la Coca Cola Zero -->
+                    <img src="assets/img/coca.png" alt="Coca Cola Zero" width="100" height="100">
+                    <!-- Información de la Coca Cola Zero -->
+                    <div class="item-info">
+                        <h3><b>Coca Cola Zero</b></h3>
+                        <p class="price">$7.00</p>
+                        <!-- Sin aderezos -->
+                        <div class="item-extras">
+                            <ul>
+                                <!-- Sin aderezos -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botón de ordenar -->
+            <a href="pagar.html"><button class="order-btn">Ordenar</button></a>
+        </div>
+
+        <!-- Footer con iconos de menú -->
+        <div class="footer-bar">
+            <a href="menu.html" class="footer-btn">
+                <img src="assets/img/icono-menu.png" alt="Menú" class="footer-icon">
+                <p>Menú</p>
+            </a>
+            <div class="footer-btn">
+                <a href="orden.html" class="footer-btn">
+                    <img src="assets/img/icono-pedidos.png" alt="Pedidos" class="footer-icon">
+                    <p>Pedido</p>
+                </a>
+            </div>
+            <div class="footer-btn">
+                <a href="pagar.html" class="footer-btn">
+                    <img src="assets/img/icono-ingredientes.png" alt="Ingredientes" class="footer-icon">
+                    <p>Facturar</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuToggle = document.getElementById('menu-toggle');
+            const menu = document.getElementById('menu');
+            const closeMenu = document.getElementById('close-menu');
+            const overlay = document.getElementById('overlay');
+
+            // Abrir el menú al hacer clic en el ícono de hamburguesa
+            menuToggle.addEventListener('click', function (event) {
+                event.stopPropagation(); // Evita que el clic se propague
+                menu.classList.toggle('visible');
+                overlay.classList.toggle('visible');
+            });
+
+            // Cerrar el menú al hacer clic en "Close"
+            closeMenu.addEventListener('click', function () {
+                menu.classList.remove('visible');
+                overlay.classList.remove('visible');
+            });
+
+            // Cerrar el menú al hacer clic fuera de él
+            overlay.addEventListener('click', function () {
+                menu.classList.remove('visible');
+                overlay.classList.remove('visible');
+            });
+        });
+
+        // Función para incrementar el contador
+        function increment(button) {
+            const counter = button.parentElement.querySelector('.count');
+            let count = parseInt(counter.textContent);
+            count++;
+            counter.textContent = count;
+        }
+
+        // Función para decrementar el contador
+        function decrement(button) {
+            const counter = button.parentElement.querySelector('.count');
+            let count = parseInt(counter.textContent);
+            if (count > 1) {
+                count--;
+                counter.textContent = count;
+            }
+        }
+
+        // Función para eliminar el artículo
+        function removeItem(button) {
+            const item = button.closest('.item-container');
+            if (item) {
+                item.remove(); // Elimina el artículo del DOM
+            }
+        }
+    </script>
+</body>
+</html>
