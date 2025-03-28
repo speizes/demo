@@ -22,6 +22,7 @@
         /* Contenedor principal */
         #main-screen {
             transition: padding-top 0.3s ease; /* Suaviza el cambio del padding-top */
+            padding-top: 60px; /* Ajusta este valor según el espacio entre el header y el contenido */
         }
 
         /* Fijar el footer en la parte inferior */
@@ -40,6 +41,19 @@
         /* Ajustar la posición de .menu-box para que no quede demasiado abajo */
         .menu-box {
             margin-top: 20px; /* Reducir el espacio entre el header y la menu-box */
+        }
+
+        /* Ajustar los botones de Food y Drinks para que estén más cerca del header */
+        .buttons-container {
+            margin-top: 20px; /* Ajustar este valor para acercar más los botones al header */
+        }
+
+        .button {
+            margin: 10px 0; /* Reduce el margen entre los botones */
+        }
+
+        .button p {
+            margin-top: 10px; /* Ajusta el margen entre el icono y el texto */
         }
     </style>
 </head>
@@ -175,7 +189,7 @@
 
             // Verificar si el menú está expandido o contraído para ajustar el padding-top
             accordion.addEventListener('show.bs.collapse', function () {
-                mainScreen.style.paddingTop = '60px'; // Ajustar cuando el menú está expandido
+                mainScreen.style.paddingTop = '120px'; // Ajustar cuando el menú está expandido
             });
 
             accordion.addEventListener('hide.bs.collapse', function () {
