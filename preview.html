@@ -19,9 +19,9 @@
             padding: 10px 0;
         }
 
-        /* Ajustar el contenido para que esté pegado al header, separado por un pequeño espacio */
+        /* Contenedor principal */
         #main-screen {
-            padding-top: 80px; /* Ajusta este valor para dar el espacio que deseas entre el header y el contenido */
+            transition: padding-top 0.3s ease; /* Suaviza el cambio del padding-top */
         }
 
         /* Fijar el footer en la parte inferior */
@@ -162,9 +162,10 @@
             const menu = document.getElementById('menu');
             const closeMenu = document.getElementById('close-menu');
             const hamburgerIcon = document.querySelector('.menu-hamburger');
-            const overlay = document.getElementById('overlay');
             const mainScreen = document.getElementById('main-screen');
+            const accordion = document.getElementById('menuAccordion');
 
+            // Cambiar el padding-top del main-screen dependiendo de si el menú está desplegado
             menuToggle.addEventListener('click', function (event) {
                 event.stopPropagation();
                 menu.classList.toggle('visible');
@@ -172,12 +173,23 @@
                 mainScreen.classList.toggle('menu-visible');
             });
 
+            // Verificar si el menú está expandido o contraído para ajustar el padding-top
+            accordion.addEventListener('show.bs.collapse', function () {
+                mainScreen.style.paddingTop = '120px'; // Ajustar cuando el menú está expandido
+            });
+
+            accordion.addEventListener('hide.bs.collapse', function () {
+                mainScreen.style.paddingTop = '80px'; // Ajustar cuando el menú está contraído
+            });
+
+            // Cerrar el menú al hacer clic en "Close"
             closeMenu.addEventListener('click', function () {
                 menu.classList.remove('visible');
                 hamburgerIcon.classList.remove('active');
                 mainScreen.classList.remove('menu-visible');
             });
 
+            // Cerrar el menú al hacer clic fuera de él
             document.addEventListener('click', function (event) {
                 if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
                     menu.classList.remove('visible');
