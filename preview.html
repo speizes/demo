@@ -55,14 +55,23 @@
         .button p {
             margin-top: 10px; /* Ajusta el margen entre el icono y el texto */
         }
-        .menu-header {
-    margin-bottom: 0; /* Elimina márgenes inferiores */
-    padding-bottom: 0; /* Elimina paddings inferiores */
-}
-        .menu-header, .menu-box {
+    /* Elimina espacios heredados */
+.menu-header, .menu-header h1, .menu-header p, .preview-title {
     margin: 0;
     padding: 0;
 }
+
+/* Asegura 5px de separación */
+.menu-box {
+    margin-top: 5px;
+}
+
+/* Opcional: Si usas Bootstrap, neutraliza estilos */
+.accordion, .accordion-item, .accordion-button {
+    margin: 0;
+    padding: 0;
+}
+
     </style>
 </head>
 <body>
